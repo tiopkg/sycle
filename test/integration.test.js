@@ -24,7 +24,7 @@ describe('integration', function () {
         });
 
         it('should extend app', function (done) {
-            var app = new sycle.Application();
+            var app = sycle({loadBuiltinModels: true});
             app.phase(sycle.boot.module('./test/fixtures/base-app'));
             app.phase(sycle.boot.module('./test/fixtures/extended-app'));
             app.phase(sycle.boot.database());
@@ -35,6 +35,11 @@ describe('integration', function () {
                 t(Dealership.properties['phone']);
                 t.isFunction(Dealership.baseMethod);
                 t.isFunction(Dealership.extendedMethod);
+
+                var Employee = app.model('Employee');
+                t(Employee);
+                t(Employee.properties['foo']);
+                t(Employee.properties['email']);
                 done();
             })
         });
