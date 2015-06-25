@@ -14,12 +14,14 @@ describe('boot/database', function () {
         bootDefinitions('test/fixtures/base-app/models').call(app);
     });
 
-    it('should connect database and build schemas', function () {
-        bootDatabase().call(app);
-        t.lengthOf(app.schemas, 1);
-        t.lengthOf(Object.keys(app.models), 2);
-        var Car = app.models['Car'];
-        t.isTrue(Car.setupCar);
+    it('should connect database and build schemas', function (done) {
+        bootDatabase().call(app, function () {
+            t.lengthOf(app.schemas, 1);
+            t.lengthOf(Object.keys(app.models), 2);
+            var Car = app.models['Car'];
+            t.isTrue(Car.setupCar);
+            done();
+        });
     });
 
 });
