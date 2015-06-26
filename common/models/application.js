@@ -107,7 +107,7 @@ module.exports = function (Application) {
 var crypto = require('crypto');
 
 function generateKey(hmacKey, algorithm, encoding) {
-    hmacKey = hmacKey || 'loopback';
+    hmacKey = hmacKey || 'sycle';
     algorithm = algorithm || 'sha1';
     encoding = encoding || 'hex';
     var hmac = crypto.createHmac(algorithm, hmacKey);
