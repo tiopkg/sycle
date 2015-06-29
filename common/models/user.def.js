@@ -6,7 +6,7 @@ module.exports = {
     hidden: ['password'],
     uuid: 'v4',
     properties: {
-        id: {type: String, index: true},
+        id: {type: Number, index: true},
         realm: {type: String},
         username: {type: String, index: true},
         email: {type: String, index: true},
