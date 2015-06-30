@@ -151,7 +151,7 @@ module.exports = function (User, app) {
      * @param {String} password The plain text password
      * @param {Function} cb (err, isMatch)
      */
-
+    User.prototype.hasPassword =
     User.prototype.validatePassword = function (password, cb) {
         if (this.password && password) {
             bcrypt.compare(password, this.password, function (err, isMatch) {
