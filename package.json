@@ -1,6 +1,6 @@
 {
   "name": "sycle",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "A generic node application framework.",
   "main": "lib/sycle.js",
   "scripts": {
