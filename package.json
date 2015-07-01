@@ -1,6 +1,6 @@
 {
   "name": "sycle",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "A generic node application framework.",
   "main": "lib/sycle.js",
   "scripts": {
@@ -47,7 +47,7 @@
     "mocha": "^2.2.5",
     "supertest": "^1.0.1",
     "sycle-express-rest": "^0.1.3",
-    "sycle-express-veriuser": "0.0.2",
+    "sycle-express-veriuser": "latest",
     "sycle-test": "sycle/sycle-test"
   }
 }
