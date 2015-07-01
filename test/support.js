@@ -15,11 +15,11 @@ var mysqlOptions = {
     driver: 'mysql',
     username: 'root',
     database: 'sycle_test',
-    autoupdate: true,
-    debug: true
+    autoupdate: true
+    //debug: true
 };
 
-var dbOptions = redisOptions; // change this to use redis or mysql as test database
+var dbOptions = mysqlOptions; // change this to use redis or mysql as test database
 
 var t = exports.t = chai.assert;
 

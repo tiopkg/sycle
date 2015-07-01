@@ -3,7 +3,8 @@
 module.exports = function (t) {
     return {
         properties: {
-            id: {type: String},
+            id: Number,
+            duid: {type: String, index: true, require: true}, // The domain unique identifier
             // Basic information
             name: {type: String, index: true, required: true}, // The name
             description: String, // The description

@@ -34,7 +34,7 @@ describe('Application', function () {
             t(result.masterKey);
             t(result.created);
             t(result.modified);
-            t.equal(typeof result.id, 'string');
+            t.equal(typeof result.duid, 'string');
             done(err, result);
         });
     });

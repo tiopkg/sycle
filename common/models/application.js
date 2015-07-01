@@ -6,7 +6,7 @@ module.exports = function (Application) {
 
     Application.hook('beforeCreate', function (data) {
         data.created = data.modified = new Date();
-        data.id = generateKey('id', 'md5');
+        data.duid = generateKey('duid', 'md5');
         data.clientKey = generateKey('client');
         data.javaScriptKey = generateKey('javaScript');
         data.restApiKey = generateKey('restApi');
