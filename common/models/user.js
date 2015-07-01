@@ -1,6 +1,6 @@
 "use strict";
 
-var debug = require('debug')('sycle-core:user');
+var debug = require('debug')('sycle:model:user');
 var validator = require('validator');
 var bcrypt = require('bcryptjs');
 

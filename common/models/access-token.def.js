@@ -10,7 +10,7 @@ module.exports = {
         created: {type: Date, default: function () { return new Date;}},
 
         // foreign keys
-        userId: Number
+        userId: String
     },
     relations: {
         user: {

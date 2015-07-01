@@ -1,7 +1,7 @@
 "use strict";
 
+var debug = require('debug')('sycle:model:role');
 var assert = require('assert');
-var debug = require('debug')('sycle:role');
 var async = require('async');
 var sec = require('../../lib/security');
 var AccessContext = require('../../lib/accessing').AccessContext;

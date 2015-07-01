@@ -1,8 +1,8 @@
 "use strict";
 
+var debug = require('debug')('sycle:model:acl');
 var async = require('async');
 var assert = require('assert');
-var debug = require('debug')('sycle:security:acl');
 
 var sec = require('../../lib/security');
 var accessing = require('../../lib/accessing');

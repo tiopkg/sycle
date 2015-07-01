@@ -1,5 +1,6 @@
 "use strict";
 
+var _ = require('lodash');
 var async = require('async');
 var chai = require('chai');
 chai.config.includeStack = true;
@@ -37,7 +38,7 @@ exports.mockApplicationWithDB = function (options) {
     var sapp = sycle({loadBuiltinModels: true});
     sapp.setAll(options);
     sapp.phase(sycle.boot.database(options.db));
-    sapp.phase(authorizer);
+    sapp.phase(sycle.authorizer);
     return sapp;
 };
 
