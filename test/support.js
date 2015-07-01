@@ -7,6 +7,20 @@ chai.config.includeStack = true;
 var Schema = require('jugglingdb').Schema;
 var sycle = require('../');
 
+var redisOptions = {
+    driver: 'redis-hq'
+};
+
+var mysqlOptions = {
+    driver: 'mysql',
+    username: 'root',
+    database: 'sycle_test',
+    autoupdate: true,
+    debug: true
+};
+
+var dbOptions = mysqlOptions; // change this to use redis or mysql as test database
+
 var t = exports.t = chai.assert;
 
 t.plan = function (count, done) {
@@ -30,10 +44,7 @@ exports.mockApplication = function () {
 
 exports.mockApplicationWithDB = function (options) {
     options = options || {};
-    options.db = options.db || {
-            driver: 'redis-hq'
-            //driver: 'mongodb'
-        };
+    options.db = options.db || dbOptions;
 
     var sapp = sycle({loadBuiltinModels: true});
     sapp.setAll(options);

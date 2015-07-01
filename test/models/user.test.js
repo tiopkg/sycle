@@ -3,7 +3,7 @@
 var s = require('./../support');
 var t = s.t;
 
-describe('User', function () {
+describe.only('User', function () {
     var validCredentials = {email: 'foo@bar.com', password: 'bar'};
     var validCredentialsWithTTL = {email: 'foo@bar.com', password: 'bar', ttl: 3600};
 //    var invalidCredentials = {email: 'foo1@bar.com', password: 'bar1'};
