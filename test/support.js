@@ -19,7 +19,7 @@ var mysqlOptions = {
     debug: true
 };
 
-var dbOptions = mysqlOptions; // change this to use redis or mysql as test database
+var dbOptions = redisOptions; // change this to use redis or mysql as test database
 
 var t = exports.t = chai.assert;
 

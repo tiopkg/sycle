@@ -14,7 +14,7 @@ describe('token(options)', function () {
 
     it('should populate req.token from the query string', function (done) {
         createTestAppAndRequest(this.sapp, this.token, done)
-            .get('/?access_token=' + this.token.id)
+            .get('/?access_token=' + this.token.token)
             .expect(200)
             .end(done);
     });
@@ -22,7 +22,7 @@ describe('token(options)', function () {
     it('should populate req.token from an authorization header', function (done) {
         createTestAppAndRequest(this.sapp, this.token, done)
             .get('/')
-            .set('authorization', this.token.id)
+            .set('authorization', this.token.token)
             .expect(200)
             .end(done);
     });
@@ -30,13 +30,13 @@ describe('token(options)', function () {
     it('should populate req.token from an X-Access-Token header', function (done) {
         createTestAppAndRequest(this.sapp, this.token, done)
             .get('/')
-            .set('X-Access-Token', this.token.id)
+            .set('X-Access-Token', this.token.token)
             .expect(200)
             .end(done);
     });
 
     it('should populate req.token from an authorization header with bearer token', function (done) {
-        var token = this.token.id;
+        var token = this.token.token;
         token = 'Bearer ' + new Buffer(token).toString('base64');
         createTestAppAndRequest(this.sapp, this.token, done)
             .get('/')
@@ -60,7 +60,7 @@ describe('token(options)', function () {
 
     it('should populate req.token from a header or a secure cookie', function (done) {
         var app = createTestApp(this.sapp, this.token, done);
-        var id = this.token.id;
+        var id = this.token.token;
         request(app)
             .get('/token')
             .end(function (err, res) {
@@ -86,7 +86,7 @@ describe('token(options)', function () {
         });
 
         request(app).get('/')
-            .set('Authorization', this.token.id)
+            .set('Authorization', this.token.token)
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
@@ -101,8 +101,8 @@ describe('AccessToken', function () {
     beforeEach(setupWithTestToken);
 
     it('should auto-generate id', function () {
-        assert(this.token.id);
-        assert.equal(this.token.id.length, 64);
+        assert(this.token.token);
+        assert.equal(this.token.token.length, 64);
     });
 
     it('should auto-generate created date', function () {
@@ -179,7 +179,7 @@ describe('authorize/rest', function () {
             createTestAppAndRequest(this.sapp, this.token, done)
                 .del('/test/123')
                 .expect(401)
-                .set('authorization', this.token.id)
+                .set('authorization', this.token.token)
                 .end(done);
         });
     });
@@ -189,7 +189,7 @@ describe('authorize/rest', function () {
             createTestAppAndRequest(this.sapp, this.token, done)
                 .del('/test/123')
                 .expect(403)
-                .set('authorization', this.token.id)
+                .set('authorization', this.token.token)
                 .end(done);
         });
     });
@@ -199,7 +199,7 @@ describe('authorize/rest', function () {
             createTestAppAndRequest(this.sapp, this.token, done)
                 .del('/test/123')
                 .expect(404)
-                .set('authorization', this.token.id)
+                .set('authorization', this.token.token)
                 .end(done);
         });
     });
@@ -239,13 +239,13 @@ function createTestApp(sapp, token, settings, done) {
     app.use(veriuser(sapp));
 
     app.get('/token', function (req, res) {
-        res.cookie('authorization', token.id, {signed: true});
+        res.cookie('authorization', token.token, {signed: true});
         res.end();
     });
     app.get('/', function (req, res) {
         try {
             assert(req.accessToken, 'req should have accessToken');
-            assert(req.accessToken.id === token.id);
+            assert(req.accessToken.token === token.token);
         } catch (e) {
             return done(e);
         }
@@ -272,9 +272,9 @@ function setupWithTestToken(settings, done) {
     createSapp(settings, function (err, sapp) {
         if (err) return done(err);
         self.sapp = sapp;
-        createTestToken(sapp, function (err, token) {
+        createTestToken(sapp, function (err, accessToken) {
             if (err) return done.call(self, err);
-            self.token = token;
+            self.token = accessToken;
             done.call(self);
         });
     });

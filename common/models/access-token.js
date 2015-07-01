@@ -25,7 +25,7 @@ module.exports = function (AccessToken) {
      */
 
     AccessToken.createAccessTokenId = function (cb) {
-        uid(this.settings.accessTokenIdLength || DEFAULT_TOKEN_LEN, function (err, guid) {
+        uid(this.settings.tokenLength || DEFAULT_TOKEN_LEN, function (err, guid) {
             err ? cb(err) : cb(err, guid);
         });
     };
@@ -37,29 +37,55 @@ module.exports = function (AccessToken) {
     AccessToken.hook('beforeCreate', function (data, next) {
         data = data || {};
 
-        if (data.id) return next();
+        if (data.token) return next();
 
         AccessToken.createAccessTokenId(function (err, id) {
             if (err) return next(err);
-            data.id = id;
+            data.token = id;
             next();
         });
     });
 
+    ///**
+    // * Find and validate a token for the given `id`.
+    // *
+    // * @param {String} id
+    // * @param {Function} cb (err, token)
+    // */
+    //AccessToken.findForId = function (id, cb) {
+    //    if (id) {
+    //        this.findById(id, function (err, token) {
+    //            if (err) return cb(err);
+    //            if (!token) return cb();
+    //            token.validate(function (err, isValid) {
+    //                if (err) return cb(err);
+    //                if (isValid) return cb(null, token);
+    //                var e = new Error('Invalid Access Token');
+    //                e.status = e.statusCode = 401;
+    //                cb(e);
+    //            });
+    //        });
+    //    } else {
+    //        process.nextTick(function () {
+    //            cb();
+    //        });
+    //    }
+    //};
+
     /**
      * Find and validate a token for the given `id`.
      *
-     * @param {String} id
+     * @param {String} token
      * @param {Function} cb (err, token)
      */
-    AccessToken.findForId = function (id, cb) {
-        if (id) {
-            this.findById(id, function (err, token) {
+    AccessToken.findByToken = function (token, cb) {
+        if (token) {
+            this.findOne({where: {token: token}}, function (err, accessToken) {
                 if (err) return cb(err);
-                if (!token) return cb();
-                token.validate(function (err, isValid) {
+                if (!accessToken) return cb();
+                accessToken.validate(function (err, isValid) {
                     if (err) return cb(err);
-                    if (isValid) return cb(null, token);
+                    if (isValid) return cb(null, accessToken);
                     var e = new Error('Invalid Access Token');
                     e.status = e.statusCode = 401;
                     cb(e);

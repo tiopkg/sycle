@@ -3,7 +3,7 @@
 var s = require('./../support');
 var t = s.t;
 
-describe.only('User', function () {
+describe('User', function () {
     var validCredentials = {email: 'foo@bar.com', password: 'bar'};
     var validCredentialsWithTTL = {email: 'foo@bar.com', password: 'bar', ttl: 3600};
 //    var invalidCredentials = {email: 'foo1@bar.com', password: 'bar1'};
@@ -61,8 +61,8 @@ describe.only('User', function () {
         it('Login a user by providing credentials', function (done) {
             User.login(validCredentials, function (err, accessToken) {
                 t(accessToken.userId);
-                t(accessToken.id);
-                t.equal(accessToken.id.length, 64);
+                t(accessToken.token);
+                t.equal(accessToken.token.length, 64);
 
                 done();
             });
@@ -71,9 +71,9 @@ describe.only('User', function () {
         it('Login a user by providing credentials with TTL', function (done) {
             User.login(validCredentialsWithTTL, function (err, accessToken) {
                 t(accessToken.userId);
-                t(accessToken.id);
+                t(accessToken.token);
                 t.equal(accessToken.ttl, validCredentialsWithTTL.ttl);
-                t.equal(accessToken.id.length, 64);
+                t.equal(accessToken.token.length, 64);
 
                 done();
             });
@@ -88,16 +88,16 @@ describe.only('User', function () {
             };
             User.login(validCredentialsWithTTL, function (err, accessToken) {
                 t(accessToken.userId);
-                t(accessToken.id);
+                t(accessToken.token);
                 t.equal(accessToken.ttl, 1800);
-                t.equal(accessToken.id.length, 64);
+                t.equal(accessToken.token.length, 64);
 
                 User.findById(accessToken.userId, function (err, user) {
                     user.createAccessToken(120, function (err, accessToken) {
                         t(accessToken.userId);
-                        t(accessToken.id);
+                        t(accessToken.token);
                         t.equal(accessToken.ttl, 60);
-                        t.equal(accessToken.id.length, 64);
+                        t.equal(accessToken.token.length, 64);
                         // Restore create access token
                         User.prototype.createAccessToken = createToken;
                         done();
@@ -114,7 +114,7 @@ describe.only('User', function () {
             return function (err) {
                 if(err) return done(err);
 
-                AccessToken.findById(token, function (err, accessToken) {
+                AccessToken.findByToken(token, function (err, accessToken) {
                     t(!accessToken, 'accessToken should not exist after logging out');
                     done(err);
                 });
@@ -129,7 +129,7 @@ describe.only('User', function () {
             }
 
             function logout(err, accessToken) {
-                User.logout(accessToken.id, verify(accessToken.id, done));
+                User.logout(accessToken.token, verify(accessToken.token, done));
             }
         });
 
@@ -142,16 +142,16 @@ describe.only('User', function () {
                         if(err) return done(err);
 
                         t(accessToken.userId);
-                        t(accessToken.id);
+                        t(accessToken.token);
 
                         fn(null, accessToken);
                     });
             }
 
-            function logout(err, token) {
+            function logout(err, accessToken) {
                 app.rekuest('user.logout')
-                    .prop('accessToken', token)
-                    .send(verify(token.id, done));
+                    .prop('accessToken', accessToken)
+                    .send(verify(accessToken.token, done));
             }
         });
 
@@ -294,7 +294,7 @@ describe.only('User', function () {
                     t(!err);
                     t(info.email);
                     t(info.accessToken);
-                    t(info.accessToken.id);
+                    t(info.accessToken.token);
                     t.equal(info.accessToken.ttl / 60, 15);
                     info.accessToken.user(function (err, user) {
                         t.equal(user.email, email);

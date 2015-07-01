@@ -133,15 +133,15 @@ module.exports = function (User, app) {
  *    });
      * ```
      *
-     * @param {String} tokenId
+     * @param {String} token
      * @param {Function} cb (err)
      */
 
-    User.logout = function (tokenId, cb) {
-        this.relations.accessTokens.modelTo.findById(tokenId, function (err, accessToken) {
+    User.logout = function (token, cb) {
+        this.relations.accessTokens.modelTo.findByToken(token, function (err, accessToken) {
             if (err) return cb(err);
             if (accessToken) return accessToken.destroy(cb);
-            cb(new Error('Could not find accessToken'));
+            cb(new Error('Could not find accessToken ' + token));
         });
     };
 
@@ -229,7 +229,7 @@ module.exports = function (User, app) {
             {arg: 'access_token', type: 'string', required: true, source: function (ctx) {
                 var req = ctx && ctx.request;
                 var accessToken = req && (req.accessToken || req.token);
-                return accessToken && accessToken.id;
+                return accessToken && accessToken.token;
             }, description: 'Do not supply this argument, it is automatically extracted ' +
                 'from request.'
             }
