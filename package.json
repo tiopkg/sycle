@@ -22,6 +22,7 @@
     "bcryptjs": "^2.1.0",
     "bootable": "^0.2.4",
     "cancelify": "^0.1.5",
+    "continuation-local-storage": "^3.1.4",
     "debug": "^2.2.0",
     "delegates": "0.1.0",
     "dotty": "0.0.2",
