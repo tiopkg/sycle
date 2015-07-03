@@ -18,10 +18,10 @@ module.exports = function (User, app) {
     User.settings.ttl = DEFAULT_TTL;
 
 
-    User.validatesUniquenessOf('email', {message: 'Email already exists'});
-    User.validate('email', emailValidator, {message: 'Invalid email'});
+    User.validatesUniquenessOf('email', {allowNull: true, allowBlank: true, message: 'Email already exists'});
     User.validatesUniquenessOf('username',  {allowNull: true, allowBlank: true, message: 'User already exists'});
 
+    User.validate('email', emailValidator, {message: 'Invalid email'});
 
     User.setter.password = function (plain) {
         var salt = bcrypt.genSaltSync(this.constructor.settings.saltWorkFactor || SALT_WORK_FACTOR);
