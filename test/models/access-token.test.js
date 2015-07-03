@@ -177,7 +177,7 @@ describe('authorize/rest', function () {
     it('prevents remote call with 401 status on denied ACL', function (done) {
         setupWithTestToken.call(this, function () {
             createTestAppAndRequest(this.sapp, this.token, done)
-                .del('/test/123')
+                .del('/tests/123')
                 .expect(401)
                 .set('authorization', this.token.token)
                 .end(done);
@@ -187,7 +187,7 @@ describe('authorize/rest', function () {
     it('prevent remote call with app setting status on denied ACL', function (done) {
         setupWithTestToken.call(this, {app: {aclErrorStatus: 403}}, function () {
             createTestAppAndRequest(this.sapp, this.token, done)
-                .del('/test/123')
+                .del('/tests/123')
                 .expect(403)
                 .set('authorization', this.token.token)
                 .end(done);
@@ -197,7 +197,7 @@ describe('authorize/rest', function () {
     it('prevent remote call with app setting status on denied ACL', function (done) {
         setupWithTestToken.call(this, {model: {aclErrorStatus: 404}}, function () {
             createTestAppAndRequest(this.sapp, this.token, done)
-                .del('/test/123')
+                .del('/tests/123')
                 .expect(404)
                 .set('authorization', this.token.token)
                 .end(done);
@@ -207,7 +207,7 @@ describe('authorize/rest', function () {
     it('prevent remote call if the accessToken is missing and required', function (done) {
         setupWithTestToken.call(this, function () {
             createTestAppAndRequest(this.sapp, null, done)
-                .del('/test/123')
+                .del('/tests/123')
                 .expect(401)
                 .set('authorization', null)
                 .end(done);
