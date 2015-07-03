@@ -21,7 +21,13 @@ module.exports = function (User, app) {
     User.validatesUniquenessOf('email', {allowNull: true, allowBlank: true, message: 'Email already exists'});
     User.validatesUniquenessOf('username',  {allowNull: true, allowBlank: true, message: 'User already exists'});
 
-    User.validate('email', emailValidator, {message: 'Invalid email'});
+    User.validate('identity', function (err) {
+        if (!this.email && !this.username) err();
+    }, {message: '`email, username` cannot be both blank'});
+
+    User.validate('email', function (err) {
+        if (this.email && this.email.length > 0 && !validator.isEmail(this.email)) err();
+    }, {message: 'Invalid email'});
 
     User.setter.password = function (plain) {
         var salt = bcrypt.genSaltSync(this.constructor.settings.saltWorkFactor || SALT_WORK_FACTOR);
@@ -29,8 +35,11 @@ module.exports = function (User, app) {
     };
 
     User.hook('beforeUpdate', function (data) {
-        data.nickname = data.nickname || data.username;
         data.updated = new Date();
+    });
+
+    User.hook('beforeSave', function (data) {
+        data.nickname = data.nickname || data.username;
     });
 
 
@@ -255,6 +264,3 @@ module.exports = function (User, app) {
 
 };
 
-function emailValidator(err) {
-    if (this.email && this.email.length > 0 && !validator.isEmail(this.email)) err();
-}

@@ -36,7 +36,7 @@ describe('User', function () {
             });
         });
 
-        it('Email can not be blank', function (done) {
+        it('Username and Email can be both blank', function (done) {
             User.create({password: '123'}, function (err) {
                 t.ok(err);
                 done();
