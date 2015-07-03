@@ -1,6 +1,6 @@
 {
   "name": "sycle",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "A generic node application framework.",
   "main": "lib/sycle.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "continuation-local-storage": "^3.1.4",
     "debug": "^2.2.0",
     "delegates": "0.1.0",
-    "dotty": "0.0.2",
+    "dotty": "latest",
     "inflection": "^1.7.1",
     "jugglingdb": "^0.3.0",
     "lodash": "^3.9.3",
