@@ -36,9 +36,10 @@ describe('User', function () {
             });
         });
 
-        it('Username and Email can be both blank', function (done) {
+        it.only('Username and Email can be both blank', function (done) {
             User.create({password: '123'}, function (err) {
                 t.ok(err);
+                t.property(err.codes, 'identity');
                 done();
             });
         });
