@@ -10,6 +10,7 @@ module.exports = {
         realm: {type: String},
         username: {type: String, index: true},
         email: {type: String, index: true},
+        nickname: {type: String},
         password: {type: String},
         emailVerified: Boolean,
         verificationToken: String,

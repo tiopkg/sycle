@@ -29,6 +29,7 @@ module.exports = function (User, app) {
     };
 
     User.hook('beforeUpdate', function (data) {
+        data.nickname = data.nickname || data.username;
         data.updated = new Date();
     });
 
