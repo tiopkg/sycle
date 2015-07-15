@@ -25,6 +25,7 @@
     "continuation-local-storage": "^3.1.4",
     "debug": "^2.2.0",
     "delegates": "0.1.0",
+    "depd": "^1.0.1",
     "dotty": "latest",
     "inflection": "^1.7.1",
     "jugglingdb": "^0.3.0",
