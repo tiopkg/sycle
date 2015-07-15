@@ -10,9 +10,9 @@ var sycle = require('../');
 describe('integration', function () {
 
     describe('boot.models', function () {
-        it.only('should load local module resources', function (done) {
+        it('should load local module resources', function (done) {
             var app = new sycle.Application();
-            app.phase(sycle.boot.module('./test/fixtures/base-app'));
+            app.phase(sycle.boot.models('./test/fixtures/base-app'));
             app.phase(sycle.boot.database());
             app.boot(function (err) {
                 if (err) return done(err);
