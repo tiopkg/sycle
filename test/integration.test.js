@@ -9,10 +9,10 @@ var sycle = require('../');
 
 describe('integration', function () {
 
-    describe('boot.module', function () {
+    describe('boot.models', function () {
         it('should load local module resources', function (done) {
             var app = new sycle.Application();
-            app.phase(sycle.boot.module('./test/fixtures/base-app'));
+            app.phase(sycle.boot.models('./test/fixtures/base-app'));
             app.phase(sycle.boot.database());
             app.boot(function (err) {
                 if (err) return done(err);
@@ -25,8 +25,8 @@ describe('integration', function () {
 
         it('should extend app', function (done) {
             var app = sycle({loadBuiltinModels: true});
-            app.phase(sycle.boot.module('./test/fixtures/base-app'));
-            app.phase(sycle.boot.module('./test/fixtures/extended-app'));
+            app.phase(sycle.boot.models('./test/fixtures/base-app'));
+            app.phase(sycle.boot.models('./test/fixtures/extended-app'));
             app.phase(sycle.boot.database());
             app.boot(function (err) {
                 if (err) return done(err);
@@ -130,7 +130,7 @@ describe('integration', function () {
 
         beforeEach(function (done) {
             sapp = new sycle.Application();
-            sapp.phase(sycle.boot.module('./test/fixtures/base-app'));
+            sapp.phase(sycle.boot.models('./test/fixtures/base-app'));
             sapp.phase(sycle.boot.database());
             sapp.boot(done);
         });

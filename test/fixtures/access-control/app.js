@@ -4,7 +4,7 @@ var authorizer = require('../../../').authorizer;
 
 module.exports = function (cb) {
     var sapp = sycle({loadBuiltinModels: true});
-    sapp.phase(sycle.boot.module(__dirname));
+    sapp.phase(sycle.boot.models(__dirname));
     sapp.phase(sycle.boot.database());
     sapp.phase(function () {
         sapp.use(sapp.dispatcher);
