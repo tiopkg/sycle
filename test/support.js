@@ -49,7 +49,7 @@ exports.mockApplicationWithDB = function (options) {
     var sapp = sycle({loadBuiltinModels: true});
     sapp.setAll(options);
     sapp.phase(sycle.boot.database(options.db));
-    sapp.phase(sycle.authorizer);
+    sapp.enableAuth();
     return sapp;
 };
 

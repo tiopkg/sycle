@@ -9,7 +9,7 @@ describe('authorizer', function () {
     var sapp;
     beforeEach(function (done) {
         sapp = s.mockApplicationWithDB();
-        sapp.phase(authorizer);
+        sapp.enableAuth();
         sapp.boot(done);
     });
 

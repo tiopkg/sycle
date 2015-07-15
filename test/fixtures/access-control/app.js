@@ -12,7 +12,7 @@ module.exports = function (cb) {
             if (!ctx.handled) throw new Error('Unhandled request ' + ctx.request.uri);
         });
     });
-    sapp.phase(authorizer);
+    sapp.enableAuth();
 
     sapp.boot(cb);
     return sapp;
