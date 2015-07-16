@@ -137,7 +137,7 @@ describe('User', function () {
         it('Logout a user by providing the current accessToken id (over handler)', function(done) {
             login(logout);
             function login(fn) {
-                app.rekuest('user.login')
+                app.request('user.login')
                     .payload({email: 'foo@bar.com', password: 'bar'})
                     .send(function (err, accessToken) {
                         if(err) return done(err);
@@ -150,7 +150,7 @@ describe('User', function () {
             }
 
             function logout(err, accessToken) {
-                app.rekuest('user.logout')
+                app.request('user.logout')
                     .prop('accessToken', accessToken)
                     .send(verify(accessToken.token, done));
             }

@@ -98,7 +98,7 @@ describe('integration', function () {
         });
 
         it('should handle a request with handler', function (done) {
-            app.rekuest('dealership.echo')
+            app.request('dealership.echo')
                 .payload({msg: 'hello'})
                 .send(function (err, result) {
                     if (err) return done(err);
@@ -113,7 +113,7 @@ describe('integration', function () {
                 zip: 101010,
                 address: 'Guangzhou China'
             };
-            app.rekuest('dealership.upsert')
+            app.request('dealership.upsert')
                 .payload(dealership)
                 .send(function (err, result) {
                     if (err) return done(err);
@@ -136,7 +136,7 @@ describe('integration', function () {
         });
 
         it('should resolve with canceled when cancel the future', function (done) {
-            var future = sapp.rekuest('car.order')
+            var future = sapp.request('car.order')
                 .send(function () {
                     throw new Error('Should have been cancelled');
                 });
