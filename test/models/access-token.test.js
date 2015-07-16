@@ -125,7 +125,7 @@ describe('authorize/direct', function () {
     it('prevents call with 401 status on denied ACL', function (done) {
         setupWithTestToken.call(this, function (err) {
             if (err) return done(err);
-            this.sapp.request('test.deleteById', {id: 123})
+            this.sapp.ask('test.deleteById', {id: 123})
                 .prop('accessToken', this.token)
                 .send(function (err, result) {
                     t.equal(err.statusCode, 401);
@@ -137,7 +137,7 @@ describe('authorize/direct', function () {
     it('prevent call with app setting status on denied ACL', function (done) {
         setupWithTestToken.call(this, {app: {aclErrorStatus: 403}}, function (err) {
             if (err) return done(err);
-            this.sapp.request('test.deleteById', {id: 123})
+            this.sapp.ask('test.deleteById', {id: 123})
                 .prop('accessToken', this.token)
                 .send(function (err) {
                     t.equal(err.statusCode, 403);
@@ -149,7 +149,7 @@ describe('authorize/direct', function () {
     it('prevent call with model setting status on denied ACL', function (done) {
         setupWithTestToken.call(this, {model: {aclErrorStatus: 404}}, function (err) {
             if (err) return done(err);
-            this.sapp.request('test.deleteById', {id: 123})
+            this.sapp.ask('test.deleteById', {id: 123})
                 .prop('accessToken', this.token)
                 .send(function (err) {
                     t.equal(err.statusCode, 404);
@@ -161,7 +161,7 @@ describe('authorize/direct', function () {
     it('prevent call if the accessToken is missing and required', function (done) {
         setupWithTestToken.call(this, function (err) {
             if (err) return done(err);
-            this.sapp.request('test.deleteById', {id: 123})
+            this.sapp.ask('test.deleteById', {id: 123})
                 .send(function (err) {
                     t.equal(err.statusCode, 401);
                     done();
