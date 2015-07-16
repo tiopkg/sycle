@@ -52,7 +52,7 @@ describe('hidden properties', function () {
     });
 
     it('should hide a property remotely', function (done) {
-        sapp.request('product.all').send(function (err, result) {
+        sapp.ask('product.all').send(function (err, result) {
             if (err) return done(err);
             var product = result[0].toJSON();
             t.equal(product.name, 'pencil');
@@ -62,7 +62,7 @@ describe('hidden properties', function () {
     });
 
     it('should hide a property of nested models', function (done) {
-        sapp.request('category.all', {filter: {include: 'products'}}).send(function (err, result) {
+        sapp.ask('category.all', {filter: {include: 'products'}}).send(function (err, result) {
             if (err) return done(err);
             var category = result[0].toJSON();
             var product = category.products[0];

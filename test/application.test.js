@@ -16,7 +16,7 @@ describe('app', function () {
                 c.throw('boom');
             });
 
-            app.request().send(function (err) {
+            app.ask().send(function (err) {
                 t.equal(err.message, 'boom');
                 done();
             });
@@ -29,7 +29,7 @@ describe('app', function () {
                 c.throw('boom');
             });
 
-            t.throws(function () { sycle.request().send(app); });
+            t.throws(function () { sycle.ask().send(app); });
 
         });
 
@@ -40,7 +40,7 @@ describe('app', function () {
                 throw new Error('boom');
             });
 
-            t.throws(function () { sycle.request().send(app); });
+            t.throws(function () { sycle.ask().send(app); });
         });
 
         it('should be catchable', function(done){
@@ -57,7 +57,7 @@ describe('app', function () {
                 throw new Error('boom!');
             });
 
-            app.request().send(function (err, result) {
+            app.ask().send(function (err, result) {
                 t.equal(result, 'Got error');
                 done();
             });
@@ -92,7 +92,7 @@ describe('app.use(fn)', function () {
             });
         });
 
-        app.request().send(function (err) {
+        app.ask().send(function (err) {
             if (err) return done(err);
             t.deepEqual(calls, [1, 2, 3, 4, 5, 6]);
             done();
@@ -110,7 +110,7 @@ describe('app.respond', function () {
                 c.result = 'Hello';
             });
 
-            app.request().send(function (err, result) {
+            app.ask().send(function (err, result) {
                 t.equal(result, 'Hello');
                 done();
             });
@@ -126,7 +126,7 @@ describe('app.respond', function () {
                 c.result = result;
             });
 
-            app.request().send(function (err, result) {
+            app.ask().send(function (err, result) {
                 t.equal(result, result);
                 done();
             });
@@ -146,7 +146,7 @@ describe('app.context', function(){
             c.result = 'tao'
         });
 
-        app1.request().send(function (err, result) {
+        app1.ask().send(function (err, result) {
             t.equal(result, 'tao');
             done();
         });
@@ -158,7 +158,7 @@ describe('app.context', function(){
             c.result = 'tao';
         });
 
-        app2.request().send(function (err, result) {
+        app2.ask().send(function (err, result) {
             t.equal(result, 'tao');
             done();
         });
